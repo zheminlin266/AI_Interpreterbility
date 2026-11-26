@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import MarkdownIt from 'markdown-it';
 import footnote from 'markdown-it-footnote';
 import { articles, locales } from '../site/content.mjs';
+import { tracking, trackingCheckedOn } from '../site/tracking.mjs';
 
 const dist = new URL('../dist/', import.meta.url);
 const md = new MarkdownIt().use(footnote);
@@ -30,7 +31,16 @@ for (const [lang, locale] of Object.entries(locales)) {
     assert.ok(html.includes(`<html lang="${locale.lang}">`), path);
     assert.ok(html.includes(`<link rel="canonical" href="${origin}${path}">`), path);
     assert.equal([...html.matchAll(/<h1(?:[ >])/g)].length, 1, path);
-    if (!article) assert.doesNotMatch(html, /全文译稿/, `${path}: unexpected full-translation label on homepage`);
+    if (!article) {
+      assert.doesNotMatch(html, /全文译稿|id="(?:reading|outlook)-title"/, `${path}: removed homepage content`);
+      const section = html.match(/<section id="tracking"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+      assert.ok(section?.includes(`<h2 id="tracking-title">${locale.tracking}</h2>`), `${path}: missing tracking section`);
+      assert.ok(section.includes(`datetime="${trackingCheckedOn}"`), `${path}: missing verification date`);
+      for (const entry of Object.values(tracking).flat()) {
+        assert.ok(section.includes(`<h4>${md.utils.escapeHtml(entry.name)}</h4>`), `${path}: missing ${entry.name}`);
+        for (const [url] of entry.links) assert.ok(section.includes(`href="${md.utils.escapeHtml(url)}"`), `${path}: missing ${url}`);
+      }
+    }
     for (const l of Object.values(locales)) {
       assert.ok(html.includes(`hreflang="${l.lang}" href="${origin}${l.prefix}${suffix}"`), path);
     }

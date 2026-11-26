@@ -2,6 +2,7 @@ import { copyFile, cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import MarkdownIt from 'markdown-it';
 import footnote from 'markdown-it-footnote';
 import { articles, locales } from '../site/content.mjs';
+import { tracking, trackingCheckedOn } from '../site/tracking.mjs';
 
 const origin = 'https://aiinterpretability.zhemin.ltd';
 const root = new URL('../', import.meta.url);
@@ -10,7 +11,7 @@ const md = new MarkdownIt().use(footnote);
 const esc = md.utils.escapeHtml;
 const route = (locale, article) => `${locale.prefix}${article ? `/articles/${article.slug}` : ''}/`;
 const mark = '<img alt="" width="32" height="32" src="/favicon.svg">';
-const arrow = '<span aria-hidden="true">→</span>';
+const arrow = '<span aria-hidden="true">↗</span>';
 
 md.renderer.rules.table_open = (_tokens, _index, _options, env) => `<div class="table-scroll" role="region" aria-label="${esc(env.tableLabel)}" tabindex="0"><table>\n`;
 md.renderer.rules.table_close = () => '</table></div>\n';
@@ -82,9 +83,42 @@ ${Object.values(locales).map(l => `  <link rel="alternate" hreflang="${l.lang}" 
 </html>\n`;
 }
 
+function trackingLink([url, en, zh], lang, primary = false) {
+  return `<a${primary ? ' class="tracking-link"' : ''} href="${esc(url)}">${esc(lang === 'zh' && zh ? zh : en)}${primary ? `&nbsp;${arrow}` : ''}</a>`;
+}
+
+function trackingSection(lang) {
+  const t = locales[lang];
+  return `<section id="tracking" class="tracking" aria-labelledby="tracking-title">
+      <h2 id="tracking-title">${esc(t.tracking)}</h2>
+      <p class="summary">${esc(t.trackingIntro)}</p>
+${Object.entries(tracking).map(([group, entries]) => `      <div class="tracking-group">
+        <h3 id="tracking-${group}">${esc(t[group])} <span class="tracking-count" aria-hidden="true">${String(entries.length).padStart(2, '0')}</span></h3>
+        <ul class="tracking-grid" aria-labelledby="tracking-${group}">
+${entries.map(entry => {
+  const { role, focus, evidence } = entry[lang];
+  const [primary, ...sources] = entry.links;
+  const details = group === 'organizations' ? t.trackingDetails : t.contributionDetails;
+  return `          <li class="tracking-card">
+            <h4>${esc(entry.name)}</h4>
+            <p class="tracking-role">${esc(role)}</p>
+            <p class="summary">${esc(focus)}</p>
+            ${trackingLink(primary, lang, true)}
+            <details class="tracking-details">
+              <summary>${esc(details)}</summary>
+              <p>${esc(evidence)}</p>
+              <ul>${sources.map(link => `<li>${trackingLink(link, lang)}</li>`).join('')}</ul>
+            </details>
+          </li>`;
+}).join('\n')}
+        </ul>
+      </div>`).join('\n')}
+      <p class="tracking-meta">${esc(t.trackingChecked)}${lang === 'zh' ? '：' : ': '}<time datetime="${trackingCheckedOn}">${trackingCheckedOn}</time> · ${esc(t.trackingNote)}</p>
+    </section>`;
+}
+
 function home(lang) {
   const t = locales[lang];
-  const guide = articles.find(article => article.original);
   return `<main id="main" class="home">
     <section class="intro" aria-labelledby="site-title">
       <h1 id="site-title">${esc(t.name)}</h1>
@@ -100,8 +134,7 @@ ${articles.map((article, i) => {
 }).join('\n')}
       </ol>
     </section>
-    <section class="reading" aria-labelledby="reading-title"><h2 id="reading-title">${t.reading}</h2><p>${esc(t.readingNote)}</p><a href="${route(t, guide)}">${t.readingLink} ${arrow}</a></section>
-    <section class="outlook" aria-labelledby="outlook-title"><h2 id="outlook-title">${t.next}</h2><p>${esc(t.nextNote)}</p></section>
+    ${trackingSection(lang)}
   </main>`;
 }
 
