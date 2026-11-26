@@ -12,6 +12,12 @@ const origin = 'https://aiinterpretability.zhemin.ltd';
 const pages = new Map();
 const assets = ['favicon.svg', 'main.js', 'styles.css'];
 const expected = [...assets];
+const paperAssets = await readdir(new URL('../knowledge-base/paper-images/', import.meta.url), { recursive: true });
+for (const name of paperAssets.filter(name => name.endsWith('.webp'))) {
+  const path = `paper-images/${name.replaceAll('\\', '/')}`;
+  assets.push(path);
+  expected.push(path);
+}
 
 for (const [lang, locale] of Object.entries(locales)) {
   for (const article of [null, ...articles]) {
@@ -31,21 +37,32 @@ for (const [lang, locale] of Object.entries(locales)) {
     assert.equal([...html.matchAll(/<a class="language-button"/g)].length, 1, path);
     assert.ok(html.includes(`class="language-button" href="${alternate.prefix}${suffix}" hreflang="${alternate.lang}" aria-label="${locale.switchLanguage}"><span lang="${alternate.lang}">${alternate.label}</span>`), path);
     if (article && (article[lang].file || article[lang].markdown)) {
-      const toc = html.match(/<aside class="toc">\s*<details open>([\s\S]*?)<\/details>\s*<\/aside>/)?.[1];
-      assert.ok(toc, `${path}: missing collapsible contents`);
+      const toc = html.match(/<aside class="toc"[^>]*>\s*<button[^>]+aria-controls="toc-nav" aria-expanded="true"[^>]*>.*?<\/button>\s*<nav class="toc-nav" id="toc-nav"[^>]*>([\s\S]*?)<\/nav>\s*<\/aside>/)?.[1];
+      assert.ok(toc, `${path}: missing Agora-style collapsible contents`);
       const anchors = [...toc.matchAll(/href="#([^"]+)"/g)].map(([, id]) => id);
       const headings = [...html.matchAll(/<h[2-6] id="([^"]+)"/g)].map(([, id]) => id);
       assert.ok(headings.length, `${path}: missing section headings`);
       assert.deepEqual(anchors, headings, `${path}: contents must cover every section in order`);
       if (article[lang].file) {
         const source = await readFile(new URL(`../knowledge-base/${article[lang].file}`, import.meta.url), 'utf8');
-        const body = html.match(/<div class="prose">([\s\S]*?)<\/div>\s*<\/article>/)?.[1]
-          .replace(/(<h[2-6]) id="[^"]+"/g, '$1')
-          .replace(/<div class="table-scroll"[^>]*><table>/g, '<table>')
-          .replaceAll('</table></div>', '</table>');
+        const rendered = html.match(/<div class="prose">([\s\S]*?)<\/div>\s*<\/article>/)?.[1];
+        if (article[lang].file.endsWith('.html')) {
+          assert.equal(rendered, source, `${path}: incomplete full translation`);
+          const primer = article.slug === 'transformer-inner-workings-primer';
+          assert.ok(html.includes('机器辅助全文翻译'), `${path}: missing translation disclosure`);
+          for (const id of primer ? ['S1', 'S7', 'bib', 'A1', 'A4'] : ['summary-of-results', 'related-work', 'appendices', 'paper-references']) {
+            assert.ok(headings.includes(id), `${path}: missing original section ${id}`);
+          }
+          assert.equal([...source.matchAll(/<math\b/g)].length, primer ? 395 : 283, `${path}: missing mathematics`);
+          assert.equal([...source.matchAll(/<img\b/g)].length, primer ? 16 : 28, `${path}: missing figures`);
+          assert.doesNotMatch(source, /<(?:script|iframe|object|embed|form|link|meta)\b|\son\w+\s*=|(?:href|src)="\s*(?:javascript|vbscript|data):|ZXQ\s*\d+\s*QXZ/i, `${path}: unexpected imported markup`);
+          continue;
+        }
+        const body = rendered?.replace(/(<h[2-6]) id="[^"]+"/g, '$1');
+        const normalized = body?.replace(/<div class="table-scroll"[^>]*><table>/g, '<table>').replaceAll('</table></div>', '</table>');
         const legacyAnchors = /^<a name="([A-Za-z0-9_]+)"><\/a>\r?$/gm;
         for (const [, id] of source.matchAll(legacyAnchors)) assert.ok(headings.includes(id), `${path}: missing legacy anchor ${id}`);
-        assert.equal(body, md.render(source.replace(legacyAnchors, '')).replace(/^<h1>.*?<\/h1>\n/, ''), `${path}: incomplete Markdown body`);
+        assert.equal(normalized, md.render(source.replace(legacyAnchors, '')).replace(/^<h1>.*?<\/h1>\n/, ''), `${path}: incomplete Markdown body`);
       }
     } else if (article) {
       assert.ok(article.original, `${path}: missing original for link-only page`);

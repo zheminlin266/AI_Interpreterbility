@@ -67,24 +67,79 @@ main { flex: 1; padding-top: clamp(2rem, 5vw, 3.375rem); }
 .article-header h1 { font-size: clamp(1.5rem, 4.5vw, 2.25rem); letter-spacing: -.026em; overflow-wrap: anywhere; }
 .source { margin-top: 1rem; font-size: .875rem; }
 .source p { margin-bottom: .2rem; color: var(--muted); }
-.toc { margin-block: 1.5rem; min-width: 0; font-size: .875rem; overflow-wrap: anywhere; }
-.toc details { padding: .65rem .75rem; border: 1px solid var(--line); border-radius: .5rem; }
-.toc summary { font-weight: 650; cursor: pointer; }
-.toc ul { list-style: none; margin: .5rem 0 0; padding: 0; border-inline-start: 1px solid var(--line); }
-.toc a { display: block; margin-inline-start: -1px; padding: .2rem .5rem; border-inline-start: 1px solid transparent; color: var(--muted); text-decoration: none; }
-.toc a:hover, .toc a[aria-current] { color: var(--link); background: var(--soft); }
-.toc a[aria-current] { border-inline-start-color: currentColor; }
-.toc-h3, .toc-h4, .toc-h5, .toc-h6 { padding-inline-start: .75rem; }
-
-@media (min-width: 58rem) {
-  .article-layout:has(.toc) { width: min(100% - 2 * var(--gutter), 62rem); }
-  .article-layout article:has(.toc) { display: grid; grid-template-columns: minmax(12rem, 15rem) minmax(0, var(--measure)); column-gap: 2rem; }
-  .article-header, .prose { grid-column: 2; }
-  .toc { grid-column: 1; grid-row: 1 / span 2; align-self: start; position: sticky; top: 5rem; margin: 0; }
-  .toc nav { max-height: calc(100vh - 9rem); overflow-y: auto; }
+html:has(.article-layout) { scroll-behavior: smooth; }
+.prose :is(h1, h2, h3, h4, h5, h6)[id] { scroll-margin-top: 96px; }
+.toc {
+  position: fixed;
+  z-index: 15;
+  top: 180px;
+  left: max(24px, 50% - 735px);
+  width: 240px;
+  max-height: calc(100vh - 220px);
+}
+.toc-toggle {
+  min-height: 28px;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 7px 3px 4px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color .15s, color .15s;
+}
+.toc-toggle:not([hidden]) { display: inline-flex; }
+.toc-toggle:is(:hover, :focus-visible) { background: var(--soft); color: var(--ink); }
+.toc-toggle > span:last-child { color: var(--muted); font-size: 13px; font-weight: 500; line-height: 20px; }
+.toc-icon { display: grid; flex: none; gap: 3px; width: 13px; }
+.toc-icon span { width: 13px; height: 1.5px; border-radius: 999px; background: currentColor; }
+.toc-nav {
+  display: grid;
+  gap: 8px;
+  max-height: min(260px, 100vh - 120px);
+  margin-top: 12px;
+  padding: 0 6px 0 4px;
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+  opacity: 1;
+  transform: translateX(0);
+  transition: max-height .15s, margin-top .15s, opacity .15s, transform .15s;
+}
+.toc-nav[inert] { pointer-events: none; opacity: 0; max-height: 0; margin-top: 0; overflow: hidden; transform: translateX(-6px); }
+.toc-nav::-webkit-scrollbar { width: 5px; }
+.toc-nav::-webkit-scrollbar-thumb { background: var(--line); border-radius: 999px; }
+.toc-nav > a {
+  display: block;
+  padding-inline-start: calc(14px * var(--depth, 0));
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 20px;
+  text-decoration: none;
+  transition: color .15s, background-color .15s;
+}
+.toc-nav > a:is(:hover, :focus-visible) { color: var(--ink); background: var(--soft); }
+.toc-nav > a[aria-current="location"] { color: var(--ink); background: transparent; font-weight: 500; }
+@media (max-width: 1279px) {
+  .toc { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(.article-layout) { scroll-behavior: auto; }
+  .toc-toggle, .toc-nav, .toc-nav > a { transition: none; }
 }
 .prose { color: var(--body); line-height: 1.75; overflow-wrap: anywhere; }
 .prose > * { margin-block: 0 1rem; }
+.prose :where(section, figure, blockquote, math[display="block"], pre) { margin: 1rem 0; }
+.prose :where(section, div, blockquote) > p + p { margin-top: .8rem; }
+.prose section > div + div { margin-top: .7rem; }
+.prose img { max-width: 100%; height: auto; margin-inline: auto; }
+.prose figcaption { margin-top: .5rem; font-size: .875rem; color: var(--muted); }
+.prose :where(p, li):has(> math) { overflow-x: auto; }
+.prose :where(math[display="block"], pre) { display: block; max-width: 100%; overflow-x: auto; }
 .prose h2, .prose h3, .prose strong, .prose th { color: var(--ink); }
 .prose h2 { margin-top: 2.125rem; font-size: clamp(1.25rem, 3.5vw, 1.5rem); }
 .prose h3 { margin-top: 1.5rem; font-size: 1.125rem; }

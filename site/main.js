@@ -21,22 +21,46 @@
     });
     system.addEventListener('change', sync);
     sync();
+  });
 
-    const sections = [...document.querySelectorAll('.toc a')].map(link => [link, document.getElementById(decodeURIComponent(link.hash.slice(1)))]);
-    if (!sections.length) return;
-    const offset = parseFloat(getComputedStyle(sections[0][1]).scrollMarginTop) + 1;
-    let current;
-    const updateToc = () => {
-      const next = sections.findLast(([, heading]) => heading.getBoundingClientRect().top <= offset)?.[0];
-      if (next === current) return;
-      current?.removeAttribute('aria-current');
-      next?.setAttribute('aria-current', 'location');
-      current = next;
+  document.addEventListener('DOMContentLoaded', () => {
+    const toc = document.querySelector('.toc');
+    const toggle = toc?.querySelector('.toc-toggle');
+    const nav = toc?.querySelector('.toc-nav');
+    if (!toggle || !nav) return;
+
+    const setExpanded = (expanded) => {
+      toggle.setAttribute('aria-expanded', String(expanded));
+      toggle.setAttribute('aria-label', expanded ? toggle.dataset.collapse : toggle.dataset.expand);
+      if (!expanded && nav.contains(document.activeElement)) toggle.focus({ preventScroll: true });
+      nav.inert = !expanded;
+      nav.setAttribute('aria-hidden', String(!expanded));
+      nav.tabIndex = expanded ? 0 : -1;
     };
-    addEventListener('scroll', updateToc, { passive: true });
-    addEventListener('hashchange', updateToc);
-    addEventListener('load', updateToc);
-    addEventListener('resize', updateToc);
-    updateToc();
+    setExpanded(true);
+    toggle.addEventListener('click', () => setExpanded(toggle.getAttribute('aria-expanded') === 'false'));
+    toggle.hidden = false;
+
+    const links = new Map();
+    for (const link of nav.querySelectorAll('a[href^="#"]')) {
+      const heading = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+      if (heading) links.set(heading, link);
+    }
+    let current = links.values().next().value;
+    if (!current) return;
+    current.setAttribute('aria-current', 'location');
+    if (!('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver(entries => {
+      const first = entries.filter(entry => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+      // Keep the current section when no heading enters the reading band.
+      const next = first && links.get(first.target);
+      if (!next || next === current) return;
+      current.removeAttribute('aria-current');
+      next.setAttribute('aria-current', 'location');
+      current = next;
+    }, { rootMargin: '-96px 0px -62% 0px', threshold: [0, 1] });
+    for (const heading of links.keys()) observer.observe(heading);
   });
 })();

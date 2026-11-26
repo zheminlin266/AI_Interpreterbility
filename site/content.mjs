@@ -10,7 +10,8 @@ export const locales = {
     readingNote: '先用方法综述分清不同工具能支持什么结论，再读 Neel Nanda 的指南，挑一个能快速检验的小问题动手。',
     readingLink: '阅读研究指南中文版', next: '接下来关注什么',
     nextNote: '后续将跟踪哪些团队在做这类研究、研究者各自探索什么问题，以及公开证据能确认他们对哪些具体成果作出了贡献。',
-    nav: '主导航', skip: '跳到正文', theme: '切换深浅色', toc: '本页目录', back: '返回文章索引',
+    nav: '主导航', skip: '跳到正文', theme: '切换深浅色', toc: '目录', back: '返回文章索引',
+    expandToc: '展开文章目录', collapseToc: '收起文章目录',
     footer: 'AI 可解释性 · 双语研究知识库', readOriginal: '在 Alignment Forum 阅读英文原文',
     sourceLabel: '原文作者', sourceDate: '原文发表于 2025 年 9 月 2 日',
   },
@@ -23,6 +24,7 @@ export const locales = {
     readingLink: 'Open the research guide', next: 'What we’ll follow next',
     nextNote: 'We plan to track the teams doing this work, the questions individual researchers investigate, and which contributions to specific results the public evidence supports.',
     nav: 'Main navigation', skip: 'Skip to content', theme: 'Toggle light or dark theme', toc: 'On this page', back: 'Back to articles',
+    expandToc: 'Expand contents', collapseToc: 'Collapse contents',
     footer: 'AI Interpretability · Bilingual research knowledge base', readOriginal: 'Read the original on Alignment Forum',
     sourceLabel: 'Original author', sourceDate: 'Original published September 2, 2025',
   },
@@ -61,10 +63,10 @@ export const articles = [
   {
     slug: 'transformer-inner-workings-primer',
     zh: {
-      title: 'Transformer 语言模型的内部机制：论文阅读笔记',
-      type: '论文笔记',
-      description: '导读 Ferrando 等人的技术综述：从残差流和注意力头，到区分信息读出、因果干预和回路证据。',
-      file: 'transformer-inner-workings-primer-zh.md',
+      title: 'Transformer 语言模型内部机制入门',
+      type: '论文全文译稿',
+      description: 'Ferrando 等人对 Transformer 语言模型内部机制的技术综述，含全部正文章节、图表、公式与附录。',
+      file: 'transformer-inner-workings-primer-zh.html',
     },
     en: {
       title: 'How Transformer Language Models Work: Paper Notes',
@@ -76,10 +78,10 @@ export const articles = [
   {
     slug: 'transformer-circuits-framework',
     zh: {
-      title: 'Transformer 回路的数学框架：论文阅读笔记',
-      type: '论文笔记',
-      description: '导读 Anthropic 2021 年的回路框架：路径展开、QK 与 OV 分解、归纳头机制，以及组合图的勘误。',
-      file: 'transformer-circuits-framework-zh.md',
+      title: 'Transformer 回路的数学框架',
+      type: '论文全文译稿',
+      description: 'Anthropic 2021 年回路框架全文，含路径展开、QK 和 OV 分解、归纳头、后续勘误和附录。',
+      file: 'transformer-circuits-framework-zh.html',
     },
     en: {
       title: 'A Mathematical Framework for Transformer Circuits: Paper Notes',

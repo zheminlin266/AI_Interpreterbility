@@ -1,4 +1,4 @@
-import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { copyFile, cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import MarkdownIt from 'markdown-it';
 import footnote from 'markdown-it-footnote';
 import { articles, locales } from '../site/content.mjs';
@@ -105,14 +105,17 @@ async function articlePage(lang, article) {
   const t = locales[lang];
   const a = article[lang];
   const source = a.file ? await readFile(new URL(`knowledge-base/${a.file}`, root), 'utf8') : a.markdown;
-  const { html, headings } = source ? renderMarkdown(source, lang) : { html: '', headings: [] };
-  const toc = headings.length ? `<aside class="toc">
-    <details open>
-      <summary id="toc-title">${t.toc}</summary>
-      <nav aria-labelledby="toc-title">
-        <ul>${headings.map(({ id, text, level }) => `<li class="toc-${level}"><a href="#${id}">${esc(text)}</a></li>`).join('')}</ul>
-      </nav>
-    </details>
+  // HTML files are imported, reviewed translation fragments, not Markdown with raw HTML enabled.
+  const { html, headings } = a.file?.endsWith('.html') ? {
+    html: source,
+    headings: [...source.matchAll(/<h([2-6]) id="([^"]+)">([\s\S]*?)<\/h\1>/g)].map(([, level, id, label]) => ({
+      id, level: `h${level}`, text: md.utils.unescapeAll(label.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()),
+    })),
+  } : source ? renderMarkdown(source, lang) : { html: '', headings: [] };
+  const shallowest = Math.min(...headings.map(({ level }) => Number(level[1])));
+  const toc = headings.length ? `<aside class="toc" aria-label="${t.toc}">
+    <button class="toc-toggle" type="button" aria-controls="toc-nav" aria-expanded="true" aria-label="${t.collapseToc}" data-expand="${t.expandToc}" data-collapse="${t.collapseToc}" hidden><span class="toc-icon" aria-hidden="true"><span></span><span></span><span></span></span><span>${t.toc}</span></button>
+    <nav class="toc-nav" id="toc-nav" aria-label="${t.toc}">${headings.map(({ id, text, level }) => `<a style="--depth:${Math.min(3, Number(level[1]) - shallowest)}" href="#${esc(id)}">${esc(text)}</a>`).join('')}</nav>
   </aside>` : '';
   return `<main id="main" class="article-layout">
     <article>
@@ -140,6 +143,7 @@ await mkdir(dist, { recursive: true });
 for (const asset of ['styles.css', 'main.js', 'favicon.svg']) {
   await copyFile(new URL(`site/${asset}`, root), new URL(asset, dist));
 }
+await cp(new URL('knowledge-base/paper-images/', root), new URL('paper-images/', dist), { recursive: true });
 for (const [lang, t] of Object.entries(locales)) {
   await writePage(route(t), layout(lang, null, home(lang)));
   for (const article of articles) {

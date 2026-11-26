@@ -10,9 +10,13 @@
 | --- | --- |
 | AI 可解释性方法综述：[中文](knowledge-base/ai-interpretability-methods.md) · [English](knowledge-base/ai-interpretability-methods-en.md) | 了解输入归因、反事实、概念探针、稀疏自编码器、因果干预和回路分析各自能回答什么问题，以及结论有哪些局限。 |
 | 如何成为一名机制可解释性研究者：[中文译稿](knowledge-base/how-to-become-a-mechanistic-interpretability-researcher-zh.md) · [Neel Nanda 英文原文](https://www.alignmentforum.org/posts/jP9KDyMkchuv6tHwm/how-to-become-a-mechanistic-interpretability-researcher) | 了解如何从入门学习和小项目练习，逐步开展独立研究。 |
+| Transformer 语言模型内部机制入门：[中文全文](https://aiinterpretability.zhemin.ltd/articles/transformer-inner-workings-primer/) · [English notes](knowledge-base/transformer-inner-workings-primer-en.md) · [arXiv 原文](https://arxiv.org/html/2405.00208v3) | 从残差流、注意力和前馈层入手，了解行为定位、信息解码与已发现的机制。 |
+| Transformer 回路的数学框架：[中文全文](https://aiinterpretability.zhemin.ltd/articles/transformer-circuits-framework/) · [English notes](knowledge-base/transformer-circuits-framework-en.md) · [Anthropic 原文](https://transformer-circuits.pub/2021/framework/index.html) | 了解路径展开、QK 与 OV 分解、归纳头及组合图勘误。 |
 | [AI 可解释性研究跟踪表](AI可解释性研究跟踪.xlsx) | 按机构、团队、研究者和代表成果查找研究线索。 |
 
 初次接触可解释性，可以先读方法综述。想动手做机制可解释性研究，可以接着看研究指南；想了解某个团队或研究者，则可以从跟踪表出发，回到相关论文和项目原文。
+
+站点两篇 Transformer 论文以机器辅助全文译稿发布，原始图、公式、参考文献和附录随文保留。英文页提供阅读笔记与原文链接。
 
 ## 如何核验研究信息
 
