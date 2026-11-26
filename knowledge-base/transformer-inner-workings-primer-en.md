@@ -35,5 +35,3 @@ A useful progression is **read out a signal → change behavior through interven
 
 - **To try an experiment:** Start with the architecture in §2, then read activation patching in §3.2.2 and the IOI example in §5.4. Use paired prompts and held-out examples to test the same behavior. Record the patch location, control source, and target-token logit difference, then check whether changing the control alters the conclusion. This is a suggested exercise; we did not run it in this repository. [Tools overview, §6](https://arxiv.org/html/2405.00208v3#S6)
 - **To assess what the evidence supports:** Read §4 to distinguish readout from intervention, then §7. The authors identify a key challenge: turning findings from controlled toy tasks into practical ways to debug models and improve reliability. The primer does not establish that this transfer has been achieved. [Conclusion and future directions, §7](https://arxiv.org/html/2405.00208v3#S7)
-
-For traditional machine learning methods and more recent directions, see our [interpretability methods survey](/en/articles/ai-interpretability-methods/).

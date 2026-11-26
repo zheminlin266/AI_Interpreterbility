@@ -69,7 +69,6 @@ for (const [lang, locale] of Object.entries(locales)) {
       assert.doesNotMatch(html, /class="(?:toc|prose)"/, `${path}: link-only page must not render a body or contents`);
     }
     if (article?.original) assert.ok(html.includes(`href="${article.original}"`) && html.includes(article.author), path);
-    if (article?.slug === 'ai-interpretability-methods') assert.equal([...html.matchAll(/<tr>/g)].length, 7, path);
   }
 }
 for (const [path, html] of pages) {
@@ -83,11 +82,7 @@ for (const [path, html] of pages) {
     if (target.hash) assert.ok(destination.includes(`id="${decodeURIComponent(target.hash.slice(1))}"`), `${path}: missing anchor ${link}`);
   }
 }
-const citations = (path) => [...pages.get(path).matchAll(/\bhref="(https:\/\/[^"]+)"/g)].map(([, url]) => url).filter(url => !url.startsWith(origin));
-const methodsPath = `/articles/${articles[0].slug}/`;
-assert.ok(citations(methodsPath).length > 0);
-assert.deepEqual(citations(methodsPath), citations('/en' + methodsPath), 'translated survey must preserve citations');
 const entries = await readdir(dist, { recursive: true, withFileTypes: true });
 const files = entries.filter(entry => !entry.isDirectory()).map(entry => relative(fileURLToPath(dist), join(entry.parentPath, entry.name)).replaceAll('\\', '/'));
 assert.deepEqual(files.sort(), expected.sort(), 'unexpected deployment files');
-console.log(`Checked ${pages.size} pages: locale links, headings, anchors, citations and output files.`);
+console.log(`Checked ${pages.size} pages: locale links, headings, anchors and output files.`);

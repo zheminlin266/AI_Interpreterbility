@@ -7,7 +7,7 @@ export const locales = {
     name: 'AI 可解释性知识库',
     intro: '从一次预测的输入归因，到语言模型内部的因果干预。这里用中英双语整理研究方法、入门材料和原始证据。',
     library: '文章', reading: '推荐阅读',
-    readingNote: '先用方法综述分清不同工具能支持什么结论，再读 Neel Nanda 的指南，挑一个能快速检验的小问题动手。',
+    readingNote: '读 Neel Nanda 的指南，挑一个能快速检验的小问题动手。',
     readingLink: '阅读研究指南中文版', next: '接下来关注什么',
     nextNote: '后续将跟踪哪些团队在做这类研究、研究者各自探索什么问题，以及公开证据能确认他们对哪些具体成果作出了贡献。',
     nav: '主导航', skip: '跳到正文', theme: '切换深浅色', toc: '目录', back: '返回文章索引',
@@ -20,7 +20,7 @@ export const locales = {
     name: 'AI Interpretability',
     intro: 'From attributing a prediction to intervening in a language model. A bilingual knowledge base for research methods, getting started, and finding the original evidence.',
     library: 'Articles', reading: 'Suggested reading',
-    readingNote: 'Use the methods survey to see what each tool can tell you. Then read Neel Nanda’s guide and pick a small question you can test quickly.',
+    readingNote: 'Read Neel Nanda’s guide and pick a small question you can test quickly.',
     readingLink: 'Open the research guide', next: 'What we’ll follow next',
     nextNote: 'We plan to track the teams doing this work, the questions individual researchers investigate, and which contributions to specific results the public evidence supports.',
     nav: 'Main navigation', skip: 'Skip to content', theme: 'Toggle light or dark theme', toc: 'On this page', back: 'Back to articles',
@@ -31,21 +31,6 @@ export const locales = {
 };
 
 export const articles = [
-  {
-    slug: 'ai-interpretability-methods',
-    zh: {
-      title: '现在做 AI 可解释性的主流方法是什么？',
-      type: '方法综述',
-      description: '六类常用方法各能回答什么？从输入归因到回路分析，区分相关信号、因果干预和机制证据。',
-      file: 'ai-interpretability-methods.md',
-    },
-    en: {
-      title: 'What Are the Main Methods in AI Interpretability Today?',
-      type: 'Methods survey',
-      description: 'Six families of methods, from input attribution to circuit analysis, and what each can tell us about correlation, causation, and mechanisms.',
-      file: 'ai-interpretability-methods-en.md',
-    },
-  },
   {
     slug: 'mechanistic-interpretability-research-guide', original, author: 'Neel Nanda', authorUrl,
     zh: {
