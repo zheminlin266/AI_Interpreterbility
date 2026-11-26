@@ -93,7 +93,11 @@ function home(lang) {
     <section id="articles" aria-labelledby="articles-title">
       <h2 id="articles-title">${t.library}</h2>
       <ol class="entries">
-${articles.map((article, i) => `<li><span class="entry-number" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><div><h3><a href="${route(t, article)}">${esc(article[lang].title)}</a></h3><p class="summary">${esc(article[lang].description)}</p><p class="entry-type">${article[lang].type}</p></div></li>`).join('\n')}
+${articles.map((article, i) => {
+  const entry = article[lang];
+  const type = entry.type.endsWith('全文译稿') ? '' : `<p class="entry-type">${esc(entry.type)}</p>`;
+  return `<li><span class="entry-number" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><div><h3><a href="${route(t, article)}">${esc(entry.title)}</a></h3><p class="summary">${esc(entry.description)}</p>${type}</div></li>`;
+}).join('\n')}
       </ol>
     </section>
     <section class="reading" aria-labelledby="reading-title"><h2 id="reading-title">${t.reading}</h2><p>${esc(t.readingNote)}</p><a href="${route(t, guide)}">${t.readingLink} ${arrow}</a></section>

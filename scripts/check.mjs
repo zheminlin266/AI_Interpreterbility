@@ -30,6 +30,7 @@ for (const [lang, locale] of Object.entries(locales)) {
     assert.ok(html.includes(`<html lang="${locale.lang}">`), path);
     assert.ok(html.includes(`<link rel="canonical" href="${origin}${path}">`), path);
     assert.equal([...html.matchAll(/<h1(?:[ >])/g)].length, 1, path);
+    if (!article) assert.doesNotMatch(html, /全文译稿/, `${path}: unexpected full-translation label on homepage`);
     for (const l of Object.values(locales)) {
       assert.ok(html.includes(`hreflang="${l.lang}" href="${origin}${l.prefix}${suffix}"`), path);
     }
