@@ -10,7 +10,7 @@ const dist = new URL('dist/', root);
 const md = new MarkdownIt().use(footnote);
 const esc = md.utils.escapeHtml;
 const route = (locale, article) => `${locale.prefix}${article ? `/articles/${article.slug}` : ''}/`;
-const mark = '<img alt="" width="32" height="32" src="/favicon.svg">';
+const mark = '<img alt="" width="32" height="32" src="/favicon.png">';
 const arrow = '<span aria-hidden="true">↗</span>';
 
 md.renderer.rules.table_open = (_tokens, _index, _options, env) => `<div class="table-scroll" role="region" aria-label="${esc(env.tableLabel)}" tabindex="0"><table>\n`;
@@ -58,7 +58,7 @@ function layout(lang, article, body) {
   <link rel="canonical" href="${origin}${path}">
 ${Object.values(locales).map(l => `  <link rel="alternate" hreflang="${l.lang}" href="${origin}${route(l, article)}">`).join('\n')}
   <link rel="alternate" hreflang="x-default" href="${origin}${route(locales.zh, article)}">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.png" type="image/png">
   <script src="/main.js"></script>
   <link rel="stylesheet" href="/styles.css">
 </head>
@@ -177,7 +177,7 @@ async function writePage(path, html) {
 
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
-for (const asset of ['styles.css', 'main.js', 'favicon.svg']) {
+for (const asset of ['styles.css', 'main.js', 'favicon.png']) {
   await copyFile(new URL(`site/${asset}`, root), new URL(asset, dist));
 }
 await cp(new URL('knowledge-base/paper-images/', root), new URL('paper-images/', dist), { recursive: true });

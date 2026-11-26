@@ -36,7 +36,7 @@ img { display: block; }
 .topbar-inner, main, .site-footer { width: min(100% - 2 * var(--gutter), var(--measure)); margin-inline: auto; }
 .topbar-inner { min-height: 3.75rem; padding-block: .375rem; display: flex; align-items: center; gap: clamp(.25rem, 2vw, 1rem); }
 .brand { display: flex; align-items: center; gap: .55rem; margin-right: auto; color: var(--ink); font-size: .9rem; font-weight: 650; text-decoration: none; line-height: 1.25; }
-.brand img { flex: none; }
+.brand img { flex: none; border-radius: 5px; }
 .language-button, .nav-library, .theme { color: var(--muted); text-decoration: none; }
 .nav-library { font-size: .875rem; white-space: nowrap; }
 .language-button { display: grid; width: 38px; height: 38px; flex: none; place-items: center; border-radius: 8px; font-size: 13px; font-weight: 500; letter-spacing: .04em; }
