@@ -21,12 +21,19 @@ function renderMarkdown(source, lang) {
   if (tokens[0]?.tag === 'h1') tokens.splice(0, 3);
   const headings = [];
   const ids = new Set();
-  for (const [i, token] of tokens.entries()) {
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
     if (token.type !== 'heading_open') continue;
     const text = tokens[i + 1].children.map(t => t.type === 'softbreak' ? ' ' : t.content).join('');
     const base = text.normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{M}\p{N}]+/gu, '-').replace(/^-|-$/g, '') || 'section';
-    let id = `section-${base}`;
-    for (let n = 2; ids.has(id); n++) id = `section-${base}-${n}`;
+    const legacyId = tokens[i - 3]?.type === 'paragraph_open' && tokens[i - 2].content.match(/^<a name="([A-Za-z0-9_]+)"><\/a>$/)?.[1];
+    if (legacyId) {
+      tokens.splice(i - 3, 3);
+      i -= 3;
+    }
+    const stem = legacyId || `section-${base}`;
+    let id = stem;
+    for (let n = 2; ids.has(id); n++) id = `${stem}-${n}`;
     ids.add(id);
     token.attrSet('id', id);
     headings.push({ id, text, level: token.tag });
@@ -98,11 +105,15 @@ async function articlePage(lang, article) {
   const t = locales[lang];
   const a = article[lang];
   const source = a.file ? await readFile(new URL(`knowledge-base/${a.file}`, root), 'utf8') : a.markdown;
-  const { html, headings } = renderMarkdown(source, lang);
-  const toc = headings.length ? `<nav class="toc" aria-labelledby="toc-title">
-  <p id="toc-title">${t.toc}</p>
-  <ul>${headings.map(({ id, text, level }) => `<li class="toc-${level}"><a href="#${id}">${esc(text)}</a></li>`).join('')}</ul>
-</nav>` : '';
+  const { html, headings } = source ? renderMarkdown(source, lang) : { html: '', headings: [] };
+  const toc = headings.length ? `<aside class="toc">
+    <details open>
+      <summary id="toc-title">${t.toc}</summary>
+      <nav aria-labelledby="toc-title">
+        <ul>${headings.map(({ id, text, level }) => `<li class="toc-${level}"><a href="#${id}">${esc(text)}</a></li>`).join('')}</ul>
+      </nav>
+    </details>
+  </aside>` : '';
   return `<main id="main" class="article-layout">
     <article>
       <header class="article-header">
@@ -113,7 +124,7 @@ async function articlePage(lang, article) {
         ${article.original ? `<div class="source"><p>${t.sourceLabel}: <a href="${article.authorUrl}">${esc(article.author)}</a> <span aria-hidden="true">·</span> <time datetime="2025-09-02">${t.sourceDate}</time></p><a href="${article.original}" hreflang="en">${t.readOriginal} <span aria-hidden="true">↗</span></a></div>` : ''}
       </header>
       ${toc}
-      <div class="prose">${html}</div>
+      ${html ? `<div class="prose">${html}</div>` : ''}
     </article>
   </main>`;
 }

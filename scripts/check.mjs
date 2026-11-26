@@ -2,9 +2,12 @@ import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import MarkdownIt from 'markdown-it';
+import footnote from 'markdown-it-footnote';
 import { articles, locales } from '../site/content.mjs';
 
 const dist = new URL('../dist/', import.meta.url);
+const md = new MarkdownIt().use(footnote);
 const origin = 'https://aiinterpretability.zhemin.ltd';
 const pages = new Map();
 const assets = ['favicon.svg', 'main.js', 'styles.css'];
@@ -27,7 +30,27 @@ for (const [lang, locale] of Object.entries(locales)) {
     const alternate = locales[lang === 'zh' ? 'en' : 'zh'];
     assert.equal([...html.matchAll(/<a class="language-button"/g)].length, 1, path);
     assert.ok(html.includes(`class="language-button" href="${alternate.prefix}${suffix}" hreflang="${alternate.lang}" aria-label="${locale.switchLanguage}"><span lang="${alternate.lang}">${alternate.label}</span>`), path);
-    if (article) assert.ok(html.includes('class="toc"'), path);
+    if (article && (article[lang].file || article[lang].markdown)) {
+      const toc = html.match(/<aside class="toc">\s*<details open>([\s\S]*?)<\/details>\s*<\/aside>/)?.[1];
+      assert.ok(toc, `${path}: missing collapsible contents`);
+      const anchors = [...toc.matchAll(/href="#([^"]+)"/g)].map(([, id]) => id);
+      const headings = [...html.matchAll(/<h[2-6] id="([^"]+)"/g)].map(([, id]) => id);
+      assert.ok(headings.length, `${path}: missing section headings`);
+      assert.deepEqual(anchors, headings, `${path}: contents must cover every section in order`);
+      if (article[lang].file) {
+        const source = await readFile(new URL(`../knowledge-base/${article[lang].file}`, import.meta.url), 'utf8');
+        const body = html.match(/<div class="prose">([\s\S]*?)<\/div>\s*<\/article>/)?.[1]
+          .replace(/(<h[2-6]) id="[^"]+"/g, '$1')
+          .replace(/<div class="table-scroll"[^>]*><table>/g, '<table>')
+          .replaceAll('</table></div>', '</table>');
+        const legacyAnchors = /^<a name="([A-Za-z0-9_]+)"><\/a>\r?$/gm;
+        for (const [, id] of source.matchAll(legacyAnchors)) assert.ok(headings.includes(id), `${path}: missing legacy anchor ${id}`);
+        assert.equal(body, md.render(source.replace(legacyAnchors, '')).replace(/^<h1>.*?<\/h1>\n/, ''), `${path}: incomplete Markdown body`);
+      }
+    } else if (article) {
+      assert.ok(article.original, `${path}: missing original for link-only page`);
+      assert.doesNotMatch(html, /class="(?:toc|prose)"/, `${path}: link-only page must not render a body or contents`);
+    }
     if (article?.original) assert.ok(html.includes(`href="${article.original}"`) && html.includes(article.author), path);
     if (article?.slug === 'ai-interpretability-methods') assert.equal([...html.matchAll(/<tr>/g)].length, 7, path);
   }

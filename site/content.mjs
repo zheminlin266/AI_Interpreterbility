@@ -8,7 +8,7 @@ export const locales = {
     intro: '从一次预测的输入归因，到语言模型内部的因果干预。这里用中英双语整理研究方法、入门材料和原始证据。',
     library: '文章', reading: '推荐阅读',
     readingNote: '先用方法综述分清不同工具能支持什么结论，再读 Neel Nanda 的指南，挑一个能快速检验的小问题动手。',
-    readingLink: '打开研究入门导读', next: '接下来关注什么',
+    readingLink: '阅读研究指南中文版', next: '接下来关注什么',
     nextNote: '后续将跟踪哪些团队在做这类研究、研究者各自探索什么问题，以及公开证据能确认他们对哪些具体成果作出了贡献。',
     nav: '主导航', skip: '跳到正文', theme: '切换深浅色', toc: '本页目录', back: '返回文章索引',
     footer: 'AI 可解释性 · 双语研究知识库', readOriginal: '在 Alignment Forum 阅读英文原文',
@@ -47,44 +47,45 @@ export const articles = [
   {
     slug: 'mechanistic-interpretability-research-guide', original, author: 'Neel Nanda', authorUrl,
     zh: {
-      title: '如何成为机制可解释性研究者：阅读导读',
-      type: '原文导读',
-      description: 'Neel Nanda 怎样安排从基础学习、小型实验到完整项目的过渡？这份导读帮你选出下一步。',
-      markdown: `这是一份站内导读。Neel Nanda 的原文提供分阶段建议、练习思路和例子；文中的时间安排反映作者的经验，可以按自己的背景和反馈调整。
-
-## 先学到能开始做实验
-
-挑一个小型 Transformer，试着用 [ARENA 的可解释性教程](https://arena-chapter1-transformer-interp.streamlit.app/) 跑通一次实验。重点是能看懂激活、能改实验条件并读出结果。遇到具体知识缺口，再回头补线性代数、PyTorch 或架构背景。
-
-## 用小项目练习快速验证
-
-给自己几天，选一个范围明确的问题。先用探索实验找线索，再写下哪个结果会推翻自己的猜测。比如某次消融改变了输出，可以试试它是否也在另一组输入上改变同一行为，并和无关组件的干预结果比较。
-
-## 从短实验过渡到完整项目
-
-挑最有进展的小项目，再用一到两周检验它。写清比较基线、对照、未成功的实验和结论适用范围。作者也讨论了如何获取反馈、找导师，以及怎样把研究写成其他人看得懂的公开成果。
-
-还不熟悉探针、消融或回路分析？可以先看[方法综述](/articles/ai-interpretability-methods/)，弄清不同工具能给出哪一级证据，再回到指南挑练习。`,
+      title: '如何成为一名机制可解释性研究者',
+      type: '中文全文译稿',
+      description: 'Neel Nanda 分享如何掌握入门基础、用小型项目练习研究，再逐步过渡到完整项目。',
+      file: 'how-to-become-a-mechanistic-interpretability-researcher-zh.md',
     },
     en: {
-      title: 'How to Become a Mechanistic Interpretability Researcher: Reading Guide',
-      type: 'Reading guide',
-      description: 'How does Neel Nanda suggest moving from the basics to mini-projects and then to full research projects? Find a practical next step.',
-      markdown: `This is an editorial reading guide to Neel Nanda’s original article, which offers advice, exercises, and examples for each stage. Its suggested timelines reflect the author’s experience; adapt them to your background and feedback.
-
-## Learn enough to run an experiment
-
-Pick a small Transformer and run one experiment with the [ARENA interpretability tutorials](https://arena-chapter1-transformer-interp.streamlit.app/). Aim to inspect activations, change an experimental condition, and read the result. Fill gaps in linear algebra, PyTorch, or model architecture as they come up.
-
-## Get fast feedback from mini-projects
-
-Give yourself a few days and pick a narrow question. Explore first, then write down what would disprove your hunch. If an ablation changes the output, for example, check whether it changes the same behavior on a second set of inputs and compare it with an intervention on an unrelated component.
-
-## Develop a short experiment into a full project
-
-Take the most promising mini-project and spend another week or two testing it. Document the baseline, controls, failed experiments, and where the conclusions apply. Nanda also discusses getting feedback, finding mentors, and writing up work so other people can understand it.
-
-Unfamiliar with probes, ablation, or circuit analysis? Start with the [methods survey](/en/articles/ai-interpretability-methods/) to see what each tool can establish, then return here to pick an exercise.`,
+      title: 'How to Become a Mechanistic Interpretability Researcher',
+      type: 'External article',
+      description: 'Neel Nanda’s guide to learning the basics, practicing with mini-projects, and working up to full research projects.'
+    },
+  },
+  {
+    slug: 'transformer-inner-workings-primer',
+    zh: {
+      title: 'Transformer 语言模型的内部机制：论文阅读笔记',
+      type: '论文笔记',
+      description: '导读 Ferrando 等人的技术综述：从残差流和注意力头，到区分信息读出、因果干预和回路证据。',
+      file: 'transformer-inner-workings-primer-zh.md',
+    },
+    en: {
+      title: 'How Transformer Language Models Work: Paper Notes',
+      type: 'Paper notes',
+      description: 'A guide to Ferrando et al.’s primer, from residual streams and attention heads to what readouts, interventions, and circuit analysis can establish.',
+      file: 'transformer-inner-workings-primer-en.md',
+    },
+  },
+  {
+    slug: 'transformer-circuits-framework',
+    zh: {
+      title: 'Transformer 回路的数学框架：论文阅读笔记',
+      type: '论文笔记',
+      description: '导读 Anthropic 2021 年的回路框架：路径展开、QK 与 OV 分解、归纳头机制，以及组合图的勘误。',
+      file: 'transformer-circuits-framework-zh.md',
+    },
+    en: {
+      title: 'A Mathematical Framework for Transformer Circuits: Paper Notes',
+      type: 'Paper notes',
+      description: 'A guide to Anthropic’s 2021 circuits framework: path expansion, QK and OV circuits, induction heads, and the composition-plot erratum.',
+      file: 'transformer-circuits-framework-en.md',
     },
   },
 ];

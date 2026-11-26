@@ -21,5 +21,22 @@
     });
     system.addEventListener('change', sync);
     sync();
+
+    const sections = [...document.querySelectorAll('.toc a')].map(link => [link, document.getElementById(decodeURIComponent(link.hash.slice(1)))]);
+    if (!sections.length) return;
+    const offset = parseFloat(getComputedStyle(sections[0][1]).scrollMarginTop) + 1;
+    let current;
+    const updateToc = () => {
+      const next = sections.findLast(([, heading]) => heading.getBoundingClientRect().top <= offset)?.[0];
+      if (next === current) return;
+      current?.removeAttribute('aria-current');
+      next?.setAttribute('aria-current', 'location');
+      current = next;
+    };
+    addEventListener('scroll', updateToc, { passive: true });
+    addEventListener('hashchange', updateToc);
+    addEventListener('load', updateToc);
+    addEventListener('resize', updateToc);
+    updateToc();
   });
 })();
