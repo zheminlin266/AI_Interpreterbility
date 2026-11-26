@@ -1,0 +1,15 @@
+{
+  "name": "ai-interpretability-knowledge-base",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node scripts/check.mjs"
+  },
+  "dependencies": {
+    "markdown-it": "15.0.3",
+    "markdown-it-footnote": "4.0.0"
+  }
+}

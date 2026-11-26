@@ -1,2 +1,10 @@
 # Excel temporary owner/lock files
 ~$*.xlsx
+
+# Generated site and deployment metadata
+/node_modules/
+/dist/
+/.vercel/
+
+# Local project plans
+/.pi/
