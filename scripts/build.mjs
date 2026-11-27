@@ -164,7 +164,7 @@ function home(lang) {
       <h1 id="site-title">${esc(t.name)}</h1>
     </section>
     <section id="articles" aria-labelledby="articles-title">
-      <h2 id="articles-title">${t.library}</h2>
+      <h2 id="articles-title">${t.libraryTitle}</h2>
       <ol class="entries">
 ${articles.map((article, i) => {
   const entry = article[lang];
