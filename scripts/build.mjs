@@ -168,7 +168,13 @@ function home(lang) {
       <ol class="entries">
 ${articles.map((article, i) => {
   const entry = article[lang];
-  return `<li><a href="${route(t, article)}"><span class="entry-number" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><h3>${esc(entry.title)}</h3><span class="entry-arrow" aria-hidden="true">→</span></a></li>`;
+  const credit = entry.credit ?? article.credit ?? article.author;
+  return `        <li><a href="${route(t, article)}">
+          <span class="entry-number" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+          <h3>${esc(entry.title)}</h3>
+          <span class="entry-credit">${esc(credit)}</span>
+          <span class="entry-arrow" aria-hidden="true">→</span>
+        </a></li>`;
 }).join('\n')}
       </ol>
     </section>

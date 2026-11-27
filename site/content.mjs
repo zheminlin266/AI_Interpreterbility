@@ -51,12 +51,14 @@ export const articles = [
     slug: 'transformer-inner-workings-primer',
     zh: {
       title: 'Transformer 语言模型内部机制入门',
+      credit: 'Javier Ferrando 等',
       type: '论文全文译稿',
       description: 'Ferrando 等人对 Transformer 语言模型内部机制的技术综述，含全部正文章节、图表、公式与附录。',
       file: 'transformer-inner-workings-primer-zh.html',
     },
     en: {
       title: 'How Transformer Language Models Work: Paper Notes',
+      credit: 'Javier Ferrando et al.',
       type: 'Paper notes',
       description: 'A guide to Ferrando et al.’s primer, from residual streams and attention heads to what readouts, interventions, and circuit analysis can establish.',
       file: 'transformer-inner-workings-primer-en.md',
@@ -64,6 +66,7 @@ export const articles = [
   },
   {
     slug: 'transformer-circuits-framework',
+    credit: 'Anthropic',
     zh: {
       title: 'Transformer 回路的数学框架',
       type: '论文全文译稿',
