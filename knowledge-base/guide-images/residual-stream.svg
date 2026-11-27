@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="245" viewBox="0 0 360 245" style="color-scheme:light dark;color:CanvasText" fill="currentColor" font-family="system-ui, 'Microsoft YaHei', sans-serif" font-size="15" text-anchor="middle">
+  <title>计算模块从残差流读信息，再写回结果</title>
+  <rect x="162" y="13" width="36" height="207" rx="8" fill="#3b82f6" fill-opacity=".14" stroke="#3b82f6"/>
+  <path d="M180 23v187m-5-7 5 7 5-7" fill="none" stroke="#3b82f6" stroke-width="1.8"/>
+  <g fill="#0d9488" fill-opacity=".12" stroke="#0d9488">
+    <rect x="12" y="30" width="104" height="44" rx="6"/><rect x="244" y="96" width="104" height="44" rx="6"/><rect x="12" y="162" width="104" height="44" rx="6"/>
+  </g>
+  <path d="M160 43h-42m6-4-6 4 6 4m-6 18h42m-6-4 6 4-6 4M200 109h42m-6-4 6 4-6 4m6 18h-42m6-4-6 4 6 4M160 175h-42m6-4-6 4 6 4m-6 18h42m-6-4 6 4-6 4" fill="none" stroke="#0d9488" stroke-width="1.5"/>
+  <text x="64" y="58">计算模块 1</text><text x="296" y="124">计算模块 2</text><text x="64" y="190">计算模块 3</text>
+  <g font-size="13"><text x="139" y="39">读</text><text x="139" y="61">写</text><text x="221" y="105">读</text><text x="221" y="127">写</text><text x="139" y="171">读</text><text x="139" y="193">写</text></g>
+  <text x="180" y="238" font-weight="700">残差流</text>
+</svg>

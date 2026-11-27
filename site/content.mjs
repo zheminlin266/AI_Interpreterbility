@@ -69,6 +69,20 @@ export const articles = [
       type: '论文全文译稿',
       description: 'Anthropic 2021 年回路框架全文，含路径展开、QK 和 OV 分解、归纳头、后续勘误和附录。',
       file: 'transformer-circuits-framework-zh.html',
+      guides: [
+        {
+          anchor: 'introduction', section: '引言',
+          title: '引言解读：为什么要逆向工程 Transformer？',
+          description: '从「模型答对了」这个例子出发，了解论文在追问什么，以及为什么从小模型开始。',
+          file: 'transformer-circuits-framework-guide-introduction-zh.md',
+        },
+        {
+          anchor: 'summary-of-results', section: '结果摘要',
+          title: '结果摘要解读：从词对统计到归纳头',
+          description: '用三个预测例子比较零层、单层和双层模型，先理解注意力头如何配合，再读公式。',
+          file: 'transformer-circuits-framework-guide-summary-of-results-zh.md',
+        },
+      ],
     },
     en: {
       title: 'A Mathematical Framework for Transformer Circuits: Paper Notes',

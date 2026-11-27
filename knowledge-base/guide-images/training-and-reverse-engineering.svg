@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="139" viewBox="0 0 360 139" style="color-scheme:light dark;color:CanvasText" fill="currentColor" font-family="system-ui, 'Microsoft YaHei', sans-serif" font-size="14">
+  <title>训练与逆向工程的不同起点</title>
+  <g fill="#64748b" fill-opacity=".12" stroke="#8899ad">
+    <rect x="10" y="29" width="100" height="34" rx="6"/><rect x="130" y="29" width="100" height="34" rx="6"/><rect x="250" y="29" width="100" height="34" rx="6"/>
+  </g>
+  <g fill="#0d9488" fill-opacity=".13" stroke="#0d9488">
+    <rect x="10" y="94" width="100" height="34" rx="6"/><rect x="130" y="94" width="100" height="34" rx="6"/><rect x="250" y="94" width="100" height="34" rx="6"/>
+  </g>
+  <path d="M112 46h15m-5-4 5 4-5 4M232 46h15m-5-4 5 4-5 4M112 111h15m-5-4 5 4-5 4M232 111h15m-5-4 5 4-5 4" fill="none" stroke="currentColor" stroke-width="1.3"/>
+  <g font-weight="700"><text x="10" y="20">训练模型</text><text x="10" y="85">逆向工程</text></g>
+  <g text-anchor="middle">
+    <text x="60" y="51">训练数据</text><text x="180" y="51">训练过程</text><text x="300" y="51">模型权重</text>
+    <text x="60" y="116">模型权重</text><text x="180" y="116">分析内部计算</text><text x="300" y="116">理解算法</text>
+  </g>
+</svg>

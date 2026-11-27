@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="194" viewBox="0 0 360 194" style="color-scheme:light dark;color:CanvasText" fill="currentColor" font-family="system-ui, 'Microsoft YaHei', sans-serif" font-size="15" text-anchor="middle">
+  <title>同层注意力头并行读取，输出相加</title>
+  <rect x="112" y="12" width="136" height="34" rx="6" fill="#64748b" fill-opacity=".12" stroke="#8899ad"/>
+  <path d="M180 46v14H62v12m118-12v12m0-12h118v12M62 108v15h236v-15M180 108v26" fill="none" stroke="#8899ad" stroke-width="1.5"/>
+  <g fill="#3b82f6" fill-opacity=".14" stroke="#3b82f6">
+    <rect x="12" y="72" width="100" height="36" rx="6"/><rect x="130" y="72" width="100" height="36" rx="6"/><rect x="248" y="72" width="100" height="36" rx="6"/>
+  </g>
+  <circle cx="180" cy="147" r="13" fill="#0d9488" fill-opacity=".16" stroke="#0d9488"/>
+  <path d="M180 160v9m-4-4 4 4 4-4" fill="none" stroke="#0d9488" stroke-width="1.5"/>
+  <text x="180" y="34">输入信息 x</text>
+  <text y="96"><tspan x="62">注意力头 1</tspan><tspan x="180">注意力头 2</tspan><tspan x="298">注意力头 3</tspan></text>
+  <text x="180" y="154" font-size="20">+</text><text x="180" y="185">相加后写回残差流</text>
+</svg>

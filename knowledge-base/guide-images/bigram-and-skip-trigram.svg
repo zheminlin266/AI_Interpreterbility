@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="195" viewBox="0 0 360 195" style="color-scheme:light dark;color:CanvasText" fill="currentColor" font-family="system-ui, 'Microsoft YaHei', sans-serif" font-size="15">
+  <title>二元语法与跳跃三元语法的对比</title>
+  <g font-weight="700"><text x="13" y="23">二元语法：用当前 B 预测 C</text><text x="13" y="99">跳跃三元语法：B 还会回看 A</text></g>
+  <g fill="#64748b" fill-opacity=".1" stroke="#8899ad">
+    <rect x="42" y="37" width="50" height="30" rx="5"/>
+    <rect x="88" y="152" width="45" height="30" rx="5"/><rect x="157" y="152" width="45" height="30" rx="5"/>
+  </g>
+  <g fill="#3b82f6" fill-opacity=".18" stroke="#3b82f6">
+    <rect x="154" y="37" width="50" height="30" rx="5"/><rect x="266" y="37" width="50" height="30" rx="5"/>
+    <rect x="19" y="152" width="45" height="30" rx="5"/><rect x="226" y="152" width="45" height="30" rx="5"/><rect x="295" y="152" width="45" height="30" rx="5"/>
+  </g>
+  <path d="M206 52h58m-7-5 7 5-7 5M248.5 150c0-45-207-45-207 0m-5-7 5 7 5-7M273 167h20m-6-4 6 4-6 4" fill="none" stroke="#3b82f6" stroke-width="1.7"/>
+  <g text-anchor="middle">
+    <text y="57"><tspan x="67">A</tspan><tspan x="179">B</tspan><tspan x="291">C</tspan></text>
+    <text y="172"><tspan x="41.5">A</tspan><tspan x="110.5">…</tspan><tspan x="179.5">…</tspan><tspan x="248.5">B</tspan><tspan x="317.5">C</tspan></text>
+  </g>
+</svg>

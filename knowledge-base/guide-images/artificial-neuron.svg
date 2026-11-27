@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="142" viewBox="0 0 360 142" style="color-scheme:light dark;color:CanvasText" fill="currentColor" font-family="system-ui, 'Microsoft YaHei', sans-serif" font-size="16" text-anchor="middle">
+  <title>人工神经元的加权求和与激活</title>
+  <defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0l5 3-5 3" fill="none" stroke="#8899ad"/></marker></defs>
+  <g fill="#3b82f6" fill-opacity=".14" stroke="#3b82f6"><circle cx="34" cy="49" r="17"/><circle cx="34" cy="107" r="17"/></g>
+  <g fill="#0d9488" fill-opacity=".14" stroke="#0d9488"><circle cx="158" cy="78" r="22"/><rect x="215" y="58" width="76" height="40" rx="6"/></g>
+  <g fill="none" stroke="#8899ad" stroke-width="1.6" marker-end="url(#arrow)">
+    <path d="M52 49L134 73"/><path d="M52 107L134 83"/><path d="M158 34v21"/><path d="M181 78h32"/><path d="M292 78h33"/>
+  </g>
+  <text x="34" y="55">x₁</text><text x="34" y="113">x₂</text>
+  <text x="91" y="52">w₁</text><text x="91" y="117">w₂</text><text x="158" y="27">偏置 b</text>
+  <text x="158" y="85" font-size="20">Σ</text><text x="253" y="84">激活 f</text><text x="339" y="84">y</text>
+</svg>

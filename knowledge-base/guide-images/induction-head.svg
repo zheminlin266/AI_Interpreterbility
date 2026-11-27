@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="198" viewBox="0 0 360 198" style="color-scheme:light dark;color:CanvasText" fill="currentColor" font-family="system-ui, 'Microsoft YaHei', sans-serif" font-size="15">
+  <title>前一 token 注意力头与归纳头如何协作</title>
+  <g fill="#64748b" fill-opacity=".1" stroke="#8899ad">
+    <rect x="9" y="41" width="35" height="30" rx="5"/><rect x="111" y="41" width="35" height="30" rx="5"/><rect x="162" y="41" width="35" height="30" rx="5"/><rect x="213" y="41" width="35" height="30" rx="5"/><rect x="264" y="41" width="35" height="30" rx="5"/>
+    <rect x="9" y="155" width="35" height="30" rx="5"/><rect x="111" y="155" width="35" height="30" rx="5"/><rect x="162" y="155" width="35" height="30" rx="5"/><rect x="213" y="155" width="35" height="30" rx="5"/>
+  </g>
+  <g fill="#3b82f6" fill-opacity=".17" stroke="#3b82f6">
+    <rect x="60" y="41" width="35" height="30" rx="5"/><rect x="60" y="155" width="35" height="30" rx="5"/><rect x="264" y="155" width="35" height="30" rx="5"/>
+  </g>
+  <rect x="315" y="155" width="35" height="30" rx="5" fill="#0d9488" fill-opacity=".18" stroke="#0d9488"/>
+  <path d="M26.5 73q0 21 51 17V73m-5 6 5-6 5 6M281.5 153c0-32-204-32-204 0m-5-6 5 6 5-6" fill="none" stroke="#3b82f6" stroke-width="1.7"/>
+  <path d="M301 170h12m-4-3 4 3-4 3" fill="none" stroke="#0d9488" stroke-width="1.7"/>
+  <g text-anchor="middle">
+    <text y="61"><tspan x="26.5">X</tspan><tspan x="77.5">Y</tspan><tspan x="128.5">Z</tspan><tspan x="179.5">A</tspan><tspan x="230.5">B</tspan><tspan x="281.5">X</tspan></text>
+    <text y="175"><tspan x="26.5">X</tspan><tspan x="77.5">Y</tspan><tspan x="128.5">Z</tspan><tspan x="179.5">A</tspan><tspan x="230.5">B</tspan><tspan x="281.5">X</tspan><tspan x="332.5">Y</tspan></text>
+  </g>
+  <text x="9" y="24" font-weight="700">第一层：记录前一个 token 的信息</text>
+  <text x="92" y="94" font-size="14">Y 的位置获得 X 的信息</text>
+  <text x="9" y="119" font-weight="700">第二层：匹配 X，提高 Y 的分数</text>
+</svg>

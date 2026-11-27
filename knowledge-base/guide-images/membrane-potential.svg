@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="226" viewBox="0 0 360 226" style="color-scheme:light dark;color:CanvasText" fill="currentColor" font-family="system-ui, 'Microsoft YaHei', sans-serif" font-size="14">
+  <title>典型动作电位的示意波形</title>
+  <path d="M49 28H345M49 80H345M49 132H345M49 184H345" fill="none" stroke="currentColor" stroke-opacity=".15"/>
+  <path d="M49 22v173h299" fill="none" stroke="currentColor" stroke-opacity=".6"/>
+  <path d="M49 151.5H345" fill="none" stroke="#b86b18" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <path d="M50 171h47c15 0 27-8 39-20c11-14 15-115 32-115s24 136 42 151c18 14 33-16 59-16h76" fill="none" stroke="#0d9488" stroke-width="2.8"/>
+  <g text-anchor="end" font-size="12"><text x="42" y="32">40</text><text x="42" y="84">0</text><text x="42" y="136">−40</text><text x="42" y="188">−80</text></g>
+  <text x="13" y="16" font-size="12">mV</text><text x="184" y="35">动作电位</text>
+  <text x="61" y="165" font-size="12">静息电位</text><text x="345" y="144" text-anchor="end" font-size="13">示意阈值 −55 mV</text>
+  <text x="197" y="218" text-anchor="middle">时间</text>
+</svg>

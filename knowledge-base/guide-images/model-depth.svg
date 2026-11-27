@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="155" viewBox="0 0 360 155" style="color-scheme:light dark;color:CanvasText" fill="currentColor" font-family="system-ui, 'Microsoft YaHei', sans-serif" font-size="14">
+  <title>从零层到双层的纯注意力模型</title>
+  <path d="M105 28H308M105 77H308M105 126H308" fill="none" stroke="#8899ad" stroke-width="1.5"/>
+  <g fill="#64748b" fill-opacity=".12" stroke="#8899ad">
+    <rect x="63" y="11" width="42" height="34" rx="6"/><rect x="308" y="11" width="42" height="34" rx="6"/>
+    <rect x="63" y="60" width="42" height="34" rx="6"/><rect x="308" y="60" width="42" height="34" rx="6"/>
+    <rect x="63" y="109" width="42" height="34" rx="6"/><rect x="308" y="109" width="42" height="34" rx="6"/>
+  </g>
+  <g stroke="#0d9488" fill="Canvas">
+    <rect x="169" y="60" width="76" height="34" rx="6"/>
+    <rect x="125" y="109" width="76" height="34" rx="6"/><rect x="213" y="109" width="76" height="34" rx="6"/>
+  </g>
+  <g font-weight="700"><text x="12" y="33">零层</text><text x="12" y="82">单层</text><text x="12" y="131">双层</text></g>
+  <g text-anchor="middle">
+    <text x="84" y="33">E</text><text x="329" y="33">U</text>
+    <text x="84" y="82">E</text><text x="207" y="82">注意力</text><text x="329" y="82">U</text>
+    <text x="84" y="131">E</text><text x="163" y="131">注意力 1</text><text x="251" y="131">注意力 2</text><text x="329" y="131">U</text>
+  </g>
+</svg>
