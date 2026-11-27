@@ -78,7 +78,7 @@ ${Object.values(locales).map(l => `  <link rel="alternate" hreflang="${l.lang}" 
     </nav>
   </header>
   ${body}
-  <footer class="site-footer">${t.footer}</footer>
+  <footer class="site-footer">${esc(t.name)}</footer>
 </body>
 </html>\n`;
 }
@@ -91,9 +91,8 @@ function trackingSection(lang) {
   const t = locales[lang];
   return `<section id="tracking" class="tracking" aria-labelledby="tracking-title">
       <h2 id="tracking-title">${esc(t.tracking)}</h2>
-      <p class="summary">${esc(t.trackingIntro)}</p>
 ${Object.entries(tracking).map(([group, entries]) => `      <div class="tracking-group">
-        <h3 id="tracking-${group}">${esc(t[group])} <span class="tracking-count" aria-hidden="true">${String(entries.length).padStart(2, '0')}</span></h3>
+        <h3 id="tracking-${group}">${esc(t[group])}</h3>
         <ul class="tracking-grid" aria-labelledby="tracking-${group}">
 ${entries.map(entry => {
   const { role, focus, evidence } = entry[lang];
@@ -122,15 +121,13 @@ function home(lang) {
   return `<main id="main" class="home">
     <section class="intro" aria-labelledby="site-title">
       <h1 id="site-title">${esc(t.name)}</h1>
-      <p class="lede">${esc(t.intro)}</p>
     </section>
     <section id="articles" aria-labelledby="articles-title">
       <h2 id="articles-title">${t.library}</h2>
       <ol class="entries">
 ${articles.map((article, i) => {
   const entry = article[lang];
-  const type = entry.type.endsWith('全文译稿') ? '' : `<p class="entry-type">${esc(entry.type)}</p>`;
-  return `<li><span class="entry-number" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><div><h3><a href="${route(t, article)}">${esc(entry.title)}</a></h3><p class="summary">${esc(entry.description)}</p>${type}</div></li>`;
+  return `<li><a href="${route(t, article)}"><span class="entry-number" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><h3>${esc(entry.title)}</h3><span class="entry-arrow" aria-hidden="true">→</span></a></li>`;
 }).join('\n')}
       </ol>
     </section>
@@ -158,9 +155,7 @@ async function articlePage(lang, article) {
     <article>
       <header class="article-header">
         <a class="back" href="${route(t)}#articles"><span aria-hidden="true">←</span> ${t.back}</a>
-        <p class="eyebrow">${a.type}</p>
         <h1>${esc(a.title)}</h1>
-        <p class="lede">${esc(a.description)}</p>
         ${article.original ? `<div class="source"><p>${t.sourceLabel}: <a href="${article.authorUrl}">${esc(article.author)}</a> <span aria-hidden="true">·</span> <time datetime="2025-09-02">${t.sourceDate}</time></p><a href="${article.original}" hreflang="en">${t.readOriginal} <span aria-hidden="true">↗</span></a></div>` : ''}
       </header>
       ${toc}
